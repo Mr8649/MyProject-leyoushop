@@ -4,15 +4,16 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author bystander
- * @date 2018/9/15
+ * @author 小艺
+ * @date 2019/3/28
+ * 功能：这个是一个视图对象，返回表信息和总条数
  */
 @Data
 public class PageResult<T> {
 
-    private Long total;
-    private Integer totalPage;
-    private List<T> items;
+    private Long total;//总条数
+    private Integer totalPage;//总页数
+    private List<T> items;//当前页数
 
     public PageResult(Long total, List<T> items) {
         this.total = total;

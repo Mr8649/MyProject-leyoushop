@@ -1,5 +1,4 @@
 package com.leyou.common.enums;
-
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +12,7 @@ public enum ExceptionEnum {
 
     BRAND_CREATE_FAILED(500, "新增品牌失败"),
     BRAND_NOT_FOUND(404, "品牌查询失败"),
+    BRAND_SAVE_ERROR(500,"新增品牌失败"),
     UPDATE_BRAND_FAILED(500, "品牌更新失败"),
     DELETE_BRAND_EXCEPTION(500, "删除品牌失败"),
 
