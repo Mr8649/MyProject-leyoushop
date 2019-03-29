@@ -1,18 +1,5 @@
 package com.leyou.item.service;
 
-//import com.github.pagehelper.PageHelper;
-//import com.github.pagehelper.PageInfo;
-//import com.leyou.common.enums.ExceptionEnum;
-//import com.leyou.common.exception.LyException;
-//import com.leyou.common.vo.PageResult;
-//import com.leyou.item.mapper.BrandMapper;
-//import com.leyou.item.pojo.Brand;
-//import org.apache.commons.lang.StringUtils;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//import org.springframework.util.CollectionUtils;
-//import tk.mybatis.mapper.entity.Example;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.leyou.common.enums.ExceptionEnum;
@@ -76,14 +63,15 @@ public class BrandService {
         return new PageResult<>(info.getTotal(), list);
     }
 
+    /**insert和insertSeclect的区别就是：
+     * insertSeclect()是要有选择性的安装,如果没有插入的字段那么就是插入为空，有的字段就插入
+     * insert()是要求对应所有的字段进行插入
+     */
+    //1代表成功0代表失败
+    //可用可不用brand.setId(null);
+
     @Transactional
     public void saveBrand(Brand brand, List<Long> cids) {
-        /**insert和insertSeclect的区别就是：
-         * insertSeclect()是要有选择性的安装,如果没有插入的字段那么就是插入为空，有的字段就插入
-         * insert()是要求对应所有的字段进行插入
-         */
-        //1代表成功0代表失败
-        //可用可不用brand.setId(null);
         brand.setId(null);
       int count=brandMapper.insert(brand);
       if(count!=1){
