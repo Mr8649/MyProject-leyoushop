@@ -18,10 +18,11 @@ eureka:
     ip-address: 127.0.0.1
     instance-id: ${spring.application.name}:${server.port}
 fdfs:
-  so-timeout: 1501
+  so-timeout: 2500
   connect-timeout: 601
   thumb-image: # 缩略图
-    width: 60
-    height: 60
+    width: 80
+    height: 80
   tracker-list: # tracker地址
-    - 192.168.132.128:22122
+   - 192.168.136.128:22122
+

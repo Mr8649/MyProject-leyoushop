@@ -1,14 +1,17 @@
 package com.leyou.upload.service.UploadService;
 
+import com.github.tobato.fastdfs.domain.StorePath;
+import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.leyou.common.enums.ExceptionEnum;
 import com.leyou.common.exception.LyException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +19,8 @@ import java.util.List;
 @Service
 @Slf4j
 public class UploadService {
+    @Autowired
+  private FastFileStorageClient storageClient;
     // 支持的文件类型
     private static final List<String> ALLOW_TYPES = Arrays.asList("image/png", "image/jpeg", "bmp", "jpg");
 
@@ -42,14 +47,20 @@ public class UploadService {
 
 
             //准备目标路径
-            File dest = new File("C:\\Users\\njtech\\Desktop\\upload", file.getOriginalFilename());
+            //File dest = new File("C:\\Users\\njtech\\Desktop\\upload", file.getOriginalFilename());//这个是保存在本地，当使用FastDFS后就需要改变了
             //保存文件到本地
-            file.transferTo(dest);
+            //file.transferTo(dest);
+
+            //上传到FastDFS
+            //String extension=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
+            //上一句代码完善如下：
+            String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
+            StorePath storePath = storageClient.uploadFile(file.getInputStream(), file.getSize(), extension, null);
 
 
             //返回路径(返回一个可以访问的路径，一般用域名访问呢)
-
-            return "http://image.leyou.com/" + file.getOriginalFilename();
+            return "http://image.leyou.com/" +storePath;
+            //return "http://image.leyou.com/" + file.getOriginalFilename();
         } catch (IOException e) {
             //上传失败
             log.error("上传文件失败", e);//上传文件失败并且打出日志
