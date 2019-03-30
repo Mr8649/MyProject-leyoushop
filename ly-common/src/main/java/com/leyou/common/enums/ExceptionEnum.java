@@ -15,6 +15,9 @@ public enum ExceptionEnum {
     BRAND_SAVE_ERROR(500,"新增品牌失败"),
     UPDATE_BRAND_FAILED(500, "品牌更新失败"),
     DELETE_BRAND_EXCEPTION(500, "删除品牌失败"),
+    UPLOAD_FILE_ERROR(500,"文件上传失败!"),
+    INVALID_FILE_TYPE(400,"无效的文件类型"),
+
 
     GOODS_SAVE_ERROR(500, "新增商品错误"),
     GOODS_NOT_FOUND(400, "商品未查询到"),
