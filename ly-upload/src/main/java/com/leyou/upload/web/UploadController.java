@@ -24,7 +24,6 @@ public class UploadController {
      * @Date: 2019/3/29 22:13
      */
 
-
     @Autowired
  private  UploadService uploadService;
     @PostMapping("image")
