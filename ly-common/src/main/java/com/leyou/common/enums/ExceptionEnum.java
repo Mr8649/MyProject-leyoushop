@@ -18,6 +18,9 @@ public enum ExceptionEnum {
     UPLOAD_FILE_ERROR(500,"文件上传失败!"),
     INVALID_FILE_TYPE(400,"无效的文件类型"),
     SPEC_GROUP_NOT_FOUND(404,"商品规格组不存在"),
+    SPEC_PARAM_NOT_FOUND(404,"商品规格组参数不存在"),
+
+
 
 
     GOODS_SAVE_ERROR(500, "新增商品错误"),
@@ -48,7 +51,7 @@ public enum ExceptionEnum {
     PASSWORD_NOT_MATCHING(400, "密码错误"),
     USER_NOT_EXIST(404, "用户不存在"),
 
-    SPEC_PARAM_NOT_FOUND(204, "规格参数查询失败"),
+    //SPEC_PARAM_NOT_FOUND(204, "规格参数查询失败"),
     UPDATE_SPEC_PARAM_FAILED(500, "商品规格参数更新失败"),
     DELETE_SPEC_PARAM_FAILED(500, "商品规格参数删除失败"),
     SPEC_PARAM_CREATE_FAILED(500, "新增规格参数失败"),
