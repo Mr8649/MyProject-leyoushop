@@ -5,10 +5,18 @@ import lombok.Data;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 /**
- * @author bystander
- * @date 2018/9/18
+ * 功能描述: <br>
+ * 〈〉
+ *
+ * @Author:小艺
+ * @param 
+ * @return:
+ * @since: 1.0.0
+ * @Date: 2019/4/1 17:36
  */
+
 @Table(name = "tb_spu_detail")
 @Data
 public class SpuDetail {

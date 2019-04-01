@@ -76,67 +76,53 @@ public ResponseEntity<List<SpecGroup>> queryGroupByCid(@PathVariable("cid") Long
         return ResponseEntity.ok().build();
 
     }
-//
-//    /**
-//     * 更新商品规格组
-//     *
-//     * @param specGroup
-//     * @return
-//     */
-//    @PutMapping("group")
-//    public ResponseEntity<Void> updateSpecGroup(@RequestBody SpecGroup specGroup) {
-//        specService.updateSpecGroup(specGroup);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    /**
-//     * 增加商品规格参数
-//     *
-//     * @param specParam
-//     * @return
-//     */
-//    @PostMapping("param")
-//    public ResponseEntity<Void> saveSpecParam(@RequestBody SpecParam specParam) {
-//        specService.saveSpecParam(specParam);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
-//
-//    /**
-//     * 删除商品规格参数
-//     *
-//     * @param id
-//     * @return
-//     */
-//    @DeleteMapping("param/{id}")
-//    public ResponseEntity<Void> deleteSpecParam(@PathVariable("id") Long id) {
-//        specService.deleteSpecParam(id);
-//        return ResponseEntity.ok().build();
-//
-//    }
-//
-//    /**
-//     * 更新商品规格参数
-//     *
-//     * @param specParam
-//     * @return
-//     */
-//    @PutMapping("param")
-//    public ResponseEntity<Void> updateSpecParam(@RequestBody SpecParam specParam) {
-//        specService.updateSpecParam(specParam);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    /**
-//     * 查询规格参数组，及组内参数
-//     *
-//     * @param cid
-//     * @return
-//     */
-//    @GetMapping("{cid}")
-//    public ResponseEntity<List<SpecGroup>> querySpecsByCid(@PathVariable("cid") Long cid) {
-//        //todo
-//        return ResponseEntity.ok(specService.querySpecsByCid(cid));
-//    }
 
+    /**
+     * 更新商品规格组
+     *
+     * @param specGroup
+     * @return
+     */
+    @PutMapping("group")
+    public ResponseEntity<Void> updateSpecGroup(@RequestBody SpecGroup specGroup) {
+        specService.updateSpecGroup(specGroup);
+        return ResponseEntity.ok().build();
+    }
 
+    /**
+     * 增加商品规格参数
+     *
+     * @param param
+     * @return
+     */
+    @PostMapping("param")
+    public ResponseEntity<Void> saveSpecParam(@RequestBody SpecParam param) {
+        specService.saveSpecParam(param);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    /**
+     * 删除商品规格参数
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("param/{id}")
+    public ResponseEntity<Void> deleteSpecParam(@PathVariable("id") Long id) {
+        specService.deleteSpecParam(id);
+        return ResponseEntity.ok().build();
+
+    }
+
+    /**
+     * 更新商品规格参数
+     *
+     * @param param
+     * @return
+     */
+    @PutMapping("param")
+    public ResponseEntity<Void> updateSpecParam(@RequestBody SpecParam param) {
+        specService.updateSpecParam(param);
+        return ResponseEntity.ok().build();
+    }
 }

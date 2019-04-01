@@ -3,10 +3,18 @@ package com.leyou.item.mapper;
 import com.leyou.item.pojo.Spu;
 import tk.mybatis.mapper.common.Mapper;
 
+
 /**
- * @author 小艺
- * @date 2019/03/19
+ * 功能描述: <br>
+ * 〈〉
+ *
+ * @Author:小艺
+ * @param 
+ * @return:
+ * @since: 1.0.0
+ * @Date: 2019/4/1 17:36
  */
+
 public interface SpuMapper extends Mapper<Spu> {
 
 }

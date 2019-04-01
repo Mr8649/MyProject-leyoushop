@@ -46,4 +46,14 @@ public class CategoryService {
         return list;
     }
 //然后再web里面写categoryController
+
+
+    public List<Category> queryByIds(List<Long> ids) {
+        //return categoryMapper.selectByIdList(ids);
+        List<Category> list=categoryMapper.selectByIdList(ids);
+        if(CollectionUtils.isEmpty(list)){
+            throw new LyException(ExceptionEnum.CATEGORY_NOT_FOUND);
+        }
+        return list;
+    }
 }

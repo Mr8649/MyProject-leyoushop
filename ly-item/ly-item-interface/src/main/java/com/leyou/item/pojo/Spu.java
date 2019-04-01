@@ -10,10 +10,18 @@ import javax.persistence.Transient;
 import java.util.Date;
 import java.util.List;
 
+
 /**
- * @author bystander
- * @date 2018/9/18
+ * 功能描述: <br>
+ * 〈〉
+ *
+ * @Author:小艺
+ * @param
+ * @return:
+ * @since: 1.0.0
+ * @Date: 2019/4/1 17:30
  */
+
 @Table(name = "tb_spu")
 @Data
 public class Spu {
@@ -21,18 +29,20 @@ public class Spu {
     @Id
     @KeySql(useGeneratedKeys = true)
     private Long id;
-    private String title;
-    private String subTitle;
-    private Long cid1;
-    private Long cid2;
-    private Long cid3;
-    private Long brandId;
-    private Boolean saleable;
-    private Boolean valid;
-    private Date createTime;
+    private String title;//标题
+    private String subTitle;//子标题
+    private Long cid1;//一级类目
+    private Long cid2;//二级类目
+    private Long cid3;//三级类目
+    private Long brandId;//
+    private Boolean saleable;//是否上架
 
     @JsonIgnore
-    private Date lastUpdateTime;
+    private Boolean valid;//是否有效
+    private Date createTime;//创建时间
+
+    @JsonIgnore
+    private Date lastUpdateTime;//最后修改时间:当返回页面的时候就会忽略这个
 
 
     //spu所属的分类名称

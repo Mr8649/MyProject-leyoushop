@@ -51,6 +51,15 @@ public class SpecificationService {
     }
 
 
+    /***
+     * 功能：这个是编辑商品规格参数
+     * @param gid
+     * @param cid
+     * @param searching
+     * @param generic
+     * @return
+     */
+
     public List<SpecParam> queryParamByCid(Long gid, Long cid, Boolean searching, Boolean generic) {
         SpecParam param = new SpecParam();
         param.setGroupId(gid);
@@ -65,6 +74,10 @@ public class SpecificationService {
         return list;
     }
 
+    /**
+     * 这个是保存规格分组
+     * @param param
+     */
     public void saveSpecGroup(SpecGroup param) {
         int count = groupMapper.insert(param);
         if (count != 1) {
@@ -72,6 +85,10 @@ public class SpecificationService {
         }
     }
 
+    /**
+     * 删除规格分组
+     * @param id
+     */
     public void deleteSpecGroup(Long id) {
         if (id == null) {
             throw new LyException(ExceptionEnum.INVALID_PARAM);
@@ -83,61 +100,52 @@ public class SpecificationService {
             throw new LyException(ExceptionEnum.DELETE_SPEC_GROUP_FAILED);
         }
     }
-//
-//
-//    public void updateSpecGroup(SpecGroup group) {
-//        int count = groupMapper.updateByPrimaryKey(group);
-//        if (count != 1) {
-//            throw new LyException(ExceptionEnum.UPDATE_SPEC_GROUP_FAILED);
-//        }
-//    }
-//
-//    public void saveSpecParam(SpecParam param) {
-//        int count = paramMapper.insert(param);
-//        if (count != 1) {
-//            throw new LyException(ExceptionEnum.SPEC_PARAM_CREATE_FAILED);
-//        }
-//    }
-//
-//
-//    public void deleteSpecParam(Long id) {
-//        if (id == null) {
-//            throw new LyException(ExceptionEnum.INVALID_PARAM);
-//        }
-//        int count = paramMapper.deleteByPrimaryKey(id);
-//        if (count != 1) {
-//            throw new LyException(ExceptionEnum.DELETE_SPEC_PARAM_FAILED);
-//        }
-//    }
-//
-//    public void updateSpecParam(SpecParam param) {
-//        int count = paramMapper.updateByPrimaryKeySelective(param);
-//        if (count != 1) {
-//            throw new LyException(ExceptionEnum.UPDATE_SPEC_PARAM_FAILED);
-//        }
-//    }
-//
-//    public List<SpecGroup> querySpecsByCid(Long cid) {
-//        List<SpecGroup> groups = queryGroupByCid(cid);
-//
-//        List<SpecParam> params = queryParamByCid(null, cid, null, null);
-//
-//        Map<Long, List<SpecParam>> map = new HashMap<>();
-//        //遍历specParams
-//        for (SpecParam param : params) {
-//            Long groupId = param.getGroupId();
-//            if (!map.keySet().contains(param.getGroupId())) {
-//                //map中key不包含这个组ID
-//                map.put(param.getGroupId(), new ArrayList<>());
-//            }
-//            //添加进map中
-//            map.get(param.getGroupId()).add(param);
-//        }
-//
-//        for (SpecGroup specGroup : groups) {
-//            specGroup.setParams(map.get(specGroup.getId()));
-//        }
-//
-//        return groups;
-//    }
+
+
+    /**
+     * 更新编辑后的规格分组
+     * @param group
+     */
+    public void updateSpecGroup(SpecGroup group) {
+        int count = groupMapper.updateByPrimaryKey(group);
+        if (count != 1) {
+            throw new LyException(ExceptionEnum.UPDATE_SPEC_GROUP_FAILED);
+        }
+    }
+
+    /**
+     * 保存商品参数
+     * @param param
+     */
+    public void saveSpecParam(SpecParam param) {
+        int count = paramMapper.insert(param);
+        if (count != 1) {
+            throw new LyException(ExceptionEnum.SPEC_PARAM_CREATE_FAILED);
+        }
+    }
+
+    /**
+     * 删除商品参数
+     * @param id
+     */
+    public void deleteSpecParam(Long id) {
+        if (id == null) {
+            throw new LyException(ExceptionEnum.INVALID_PARAM);
+        }
+        int count = paramMapper.deleteByPrimaryKey(id);
+        if (count != 1) {
+            throw new LyException(ExceptionEnum.DELETE_SPEC_PARAM_FAILED);
+        }
+    }
+
+    /**
+     * 更新商品规格参数
+     * @param param
+     */
+    public void updateSpecParam(SpecParam param) {
+        int count = paramMapper.updateByPrimaryKeySelective(param);
+        if (count != 1) {
+            throw new LyException(ExceptionEnum.UPDATE_SPEC_PARAM_FAILED);
+        }
+    }
 }
