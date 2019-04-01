@@ -63,19 +63,19 @@ public ResponseEntity<List<SpecGroup>> queryGroupByCid(@PathVariable("cid") Long
         specService.saveSpecGroup(specGroup);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-//
-//    /**
-//     * 删除商品规格组
-//     *
-//     * @param id
-//     * @return
-//     */
-//    @DeleteMapping("group/{id}")
-//    public ResponseEntity<Void> deleteSpecGroup(@PathVariable("id") Long id) {
-//        specService.deleteSpecGroup(id);
-//        return ResponseEntity.ok().build();
-//
-//    }
+
+    /**
+     * 删除商品规格组
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("group/{id}")
+    public ResponseEntity<Void> deleteSpecGroup(@PathVariable("id") Long id) {
+        specService.deleteSpecGroup(id);
+        return ResponseEntity.ok().build();
+
+    }
 //
 //    /**
 //     * 更新商品规格组

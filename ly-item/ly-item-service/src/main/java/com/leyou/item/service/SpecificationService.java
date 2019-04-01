@@ -71,18 +71,18 @@ public class SpecificationService {
             throw new LyException(ExceptionEnum.SPEC_GROUP_CREATE_FAILED);
         }
     }
-//
-//    public void deleteSpecGroup(Long id) {
-//        if (id == null) {
-//            throw new LyException(ExceptionEnum.INVALID_PARAM);
-//        }
-//        SpecGroup group = new SpecGroup();
-//        group.setId(id);
-//        int count = groupMapper.deleteByPrimaryKey(group);
-//        if (count != 1) {
-//            throw new LyException(ExceptionEnum.DELETE_SPEC_GROUP_FAILED);
-//        }
-//    }
+
+    public void deleteSpecGroup(Long id) {
+        if (id == null) {
+            throw new LyException(ExceptionEnum.INVALID_PARAM);
+        }
+        SpecGroup group = new SpecGroup();
+        group.setId(id);
+        int count = groupMapper.deleteByPrimaryKey(group);
+        if (count != 1) {
+            throw new LyException(ExceptionEnum.DELETE_SPEC_GROUP_FAILED);
+        }
+    }
 //
 //
 //    public void updateSpecGroup(SpecGroup group) {
