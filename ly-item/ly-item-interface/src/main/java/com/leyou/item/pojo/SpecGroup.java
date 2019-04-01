@@ -8,10 +8,18 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.List;
 
+
 /**
- * @author bystander
- * @date 2018/9/18
+ * 功能描述: 商品规格的展示
+ * 〈〉
+ *
+ * @Author:小艺
+ * @param
+ * @return:
+ * @since: 1.0.0
+ * @Date: 2019/4/1 11:03
  */
+
 @Data
 @Table(name = "tb_spec_group")
 public class SpecGroup {

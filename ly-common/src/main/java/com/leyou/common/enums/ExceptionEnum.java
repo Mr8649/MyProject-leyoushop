@@ -17,6 +17,7 @@ public enum ExceptionEnum {
     DELETE_BRAND_EXCEPTION(500, "删除品牌失败"),
     UPLOAD_FILE_ERROR(500,"文件上传失败!"),
     INVALID_FILE_TYPE(400,"无效的文件类型"),
+    SPEC_GROUP_NOT_FOUND(404,"商品规格组不存在"),
 
 
     GOODS_SAVE_ERROR(500, "新增商品错误"),
@@ -55,7 +56,7 @@ public enum ExceptionEnum {
 
 
     SPEC_GROUP_CREATE_FAILED(500, "新增规格组失败"),
-    SPEC_GROUP_NOT_FOUND(204, "规格组查询失败"),
+    //SPEC_GROUP_NOT_FOUND(204, "规格组查询失败"),
     DELETE_SPEC_GROUP_FAILED(500, "商品规格组删除失败"),
     UPDATE_SPEC_GROUP_FAILED(500, "商品规格组更新失败"),
     ;

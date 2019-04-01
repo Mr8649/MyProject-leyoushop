@@ -21,7 +21,7 @@ public class UploadService {
     private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
     // 支持的文件类型
-    private static final List<String> suffixes = Arrays.asList("image/png", "image/jpeg");
+    private static final List<String> suffixes = Arrays.asList("image/png", "image/jpeg","image/jpg");
 
     @Autowired
     FastFileStorageClient storageClient;
