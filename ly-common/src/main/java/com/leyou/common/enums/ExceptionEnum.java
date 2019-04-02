@@ -19,10 +19,6 @@ public enum ExceptionEnum {
     INVALID_FILE_TYPE(400,"无效的文件类型"),
     SPEC_GROUP_NOT_FOUND(404,"商品规格组不存在"),
     SPEC_PARAM_NOT_FOUND(404,"商品规格组参数不存在"),
-
-
-
-
     GOODS_SAVE_ERROR(500, "新增商品错误"),
     GOODS_NOT_FOUND(400, "商品未查询到"),
     GOODS_NOT_SALEABLE(400, "商品未上架"),

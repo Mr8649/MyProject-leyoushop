@@ -14,10 +14,9 @@ import com.leyou.common.vo.PageResult;
 import com.leyou.item.pojo.Spu;
 import com.leyou.item.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -52,4 +51,17 @@ public class GoodsController {
         return ResponseEntity.ok(goodsService.querySpuByPage(page,rows,key,saleable));
     }
 
+
+    /**
+     * 新增：
+     * 保存商品
+     * @param spu
+     * @return
+     */
+    @PostMapping("goods")
+    public ResponseEntity<Void> saveGoods(@RequestBody Spu spu) {
+        goodsService.saveGoods(spu);
+        //return new ResponseEntity<>(HttpStatus.CREATED);//旧版本
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }

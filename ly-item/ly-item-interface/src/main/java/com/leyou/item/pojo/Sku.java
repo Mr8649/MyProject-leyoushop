@@ -8,10 +8,17 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Date;
 
+
 /**
- * @author bystander
- * @date 2018/9/18
+ * 功能描述: <br>
+ * 〈〉
+ * @Author:小艺
+ * @param 
+ * @return:
+ * @since: 1.0.0
+ * @Date: 2019/4/2 15:39
  */
+
 @Table(name = "tb_sku")
 @Data
 public class Sku {

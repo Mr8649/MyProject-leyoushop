@@ -5,17 +5,21 @@ import com.github.pagehelper.PageInfo;
 import com.leyou.common.enums.ExceptionEnum;
 import com.leyou.common.exception.LyException;
 import com.leyou.common.vo.PageResult;
+import com.leyou.item.mapper.SkuMapper;
 import com.leyou.item.mapper.SpuDetailMapper;
 import com.leyou.item.mapper.SpuMapper;
-import com.leyou.item.pojo.Category;
-import com.leyou.item.pojo.Spu;
+import com.leyou.item.mapper.StockMapper;
+import com.leyou.item.pojo.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +43,10 @@ public class GoodsService {
    private CategoryService categoryService;
     @Autowired
     private BrandService brandService;
+    @Autowired
+    private SkuMapper skuMapper;
+    @Autowired
+    private StockMapper stockMapper;
 
 
     /**
@@ -103,5 +111,83 @@ public class GoodsService {
             //spu.setBname(brandMapper.selectByPrimaryKey(spu.getBrandId()).getName());//老版本
             spu.setBname(brandService.queryById(spu.getBrandId()).getName());
         }
+    }
+
+
+    /**
+     * 功能描述:新增商品的服务
+     * 〈〉
+     *
+     * @Author:小艺
+     * @param
+     * @return:
+     * @since: 1.0.0
+     * @Date: 2019/4/2 15:52
+     */
+@Transactional
+    public void saveGoods(Spu spu) {
+        //新增spu
+        //添加商品要添加四个表 spu, spuDetail, sku, stock四张表
+        spu.setSaleable(true);
+        //spu.setValid(true);//原版本
+        spu.setValid(false);
+        spu.setId(null);
+        spu.setCreateTime(new Date());
+        spu.setLastUpdateTime(spu.getCreateTime());
+
+        //插入数据
+        int count = spuMapper.insert(spu);
+        if (count != 1) {
+            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+        }
+
+        //插入detail数据
+        SpuDetail detail = spu.getSpuDetail();
+        detail.setSpuId(spu.getId());
+        detailMapper.insert(detail);
+
+
+        //定义一个库存集合
+    List<Stock> stockList=new ArrayList<>();
+
+
+        //新增SKU
+        List<Sku>skus=spu.getSkus();
+        for(Sku sku:skus){
+            sku.setCreateTime(new Date());
+            sku.setLastUpdateTime(sku.getLastUpdateTime());
+            sku.setSpuId(spu.getId());
+
+
+            count=skuMapper.insert(sku);
+                    if (count != 1) {
+            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+        }
+
+
+            /**采用了新增以后就不需要再进行一条一条的插入了,应该采用批量的插入
+             *  count = stockMapper.insert(stock);
+             *             if (count != 1) {
+             *                 throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+             *             }
+             */
+
+            //插入sku和库存
+            Stock stock=new Stock();
+            stock.setSkuId(sku.getId());
+            stock.setStock(sku.getStock());
+//            count = stockMapper.insert(stock);
+//                         if (count != 1) {
+//                            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+//                         }
+
+            stockList.add(stock);
+        }
+
+      //批量新增库存
+      stockMapper.insertList(stockList);
+        //发送消息
+
+
     }
 }
