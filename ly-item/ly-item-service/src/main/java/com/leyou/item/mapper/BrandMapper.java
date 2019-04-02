@@ -12,7 +12,7 @@ public interface BrandMapper extends Mapper<Brand> {
     @Insert("INSERT INTO tb_category_brand (category_id, brand_id) VALUES (#{cid},#{bid})")
     int insertCategoryBrand(@Param("cid") Long cid, @Param("bid") Long bid);
 
-    @Select("SELECT b.`id`,b.`name` FROM tb_brand b INNER JOIN tb_category_brand cb ON cb.`brand_id`=b.`id` WHERE cb.`category_id`= #{cid}")
-    List<Brand> queryBrandList(Long cid);
+    @Select("SELECT b.* FROM tb_category_brand cb INNER JOIN tb_brand b ON b.id = cb.brand_id WHERE cb.category_id = #{cid}")
+    List<Brand> queryByCategoryId(@Param("cid") Long cid);
 
 }

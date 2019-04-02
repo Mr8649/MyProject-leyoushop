@@ -56,5 +56,16 @@ public  ResponseEntity<Void> saveBrand(Brand brand, @RequestParam("cids") List<L
     return ResponseEntity.status(HttpStatus.CREATED).build();
 }
 
+    /**
+     * 根据分类ID(cid)查询品牌
+     *
+     * @param cid
+     * @return
+     */
+    @GetMapping("cid/{cid}")
+    public ResponseEntity<List<Brand>> queryBrandByCid(@PathVariable("cid") Long cid) {
+        return ResponseEntity.ok(brandService.queryBrandByCid(cid));
+    }
+
 }
 
