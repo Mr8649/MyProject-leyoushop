@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +46,7 @@ public class GoodsService {
     private SkuMapper skuMapper;
     @Autowired
     private StockMapper stockMapper;
+
 
 
     /**
@@ -148,7 +148,7 @@ public class GoodsService {
 
 
         //定义一个库存集合
-    List<Stock> stockList=new ArrayList<>();
+    //List<Stock> stockList=new ArrayList<>();
 
 
         //新增SKU
@@ -176,16 +176,16 @@ public class GoodsService {
             Stock stock=new Stock();
             stock.setSkuId(sku.getId());
             stock.setStock(sku.getStock());
-//            count = stockMapper.insert(stock);
-//                         if (count != 1) {
-//                            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
-//                         }
+            count = stockMapper.insert(stock);
+                         if (count != 1) {
+                            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+                         }
 
-            stockList.add(stock);
+            //stockList.add(stock);
         }
 
       //批量新增库存
-      stockMapper.insertList(stockList);
+      //stockMapper.insertList(stockList);
         //发送消息
 
 
