@@ -11,12 +11,16 @@
 package com.leyou.item.web;
 
 import com.leyou.common.vo.PageResult;
+import com.leyou.item.pojo.Sku;
 import com.leyou.item.pojo.Spu;
+import com.leyou.item.pojo.SpuDetail;
 import com.leyou.item.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -64,4 +68,34 @@ public class GoodsController {
         //return new ResponseEntity<>(HttpStatus.CREATED);//旧版本
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+
+    /**
+     * 功能描述: 根据spu的id查询详情detail
+     * 〈〉
+     *
+     * @Author:小艺
+     * @param          spuId
+     * @return:
+     * @since: 1.0.0
+     * @Date: 2019/4/6 13:37
+     */
+
+    @GetMapping("spu/detail/{id}")
+    public ResponseEntity<SpuDetail> queryDetailById(@PathVariable("id") Long spuId){
+//        SpuDetail spuDetail = goodsService.queryDetailById(spuid);
+//        return ResponseEntity.ok(spuDetail);
+        return ResponseEntity.ok(goodsService.queryDetailById(spuId));
+    }
+
+
+    /**
+     *根据spu查询下面的所有sku信息
+     */
+    @GetMapping("sku/list")
+    public ResponseEntity<List<Sku>> querySkuBySpuId(@RequestParam("id") Long spuId ){
+        List<Sku> skus = goodsService.querySkuBySpuId(spuId);
+        return ResponseEntity.ok(skus);
+    }
+
 }

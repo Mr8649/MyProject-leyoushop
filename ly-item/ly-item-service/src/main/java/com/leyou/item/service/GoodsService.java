@@ -190,4 +190,48 @@ public class GoodsService {
 
 
     }
+
+
+    /**
+     * 查询详情
+     * @param spuId
+     * @return
+     */
+    public SpuDetail queryDetailById(Long spuId) {
+        SpuDetail detail = detailMapper.selectByPrimaryKey(spuId);
+        if (detail==null){
+            throw new LyException(ExceptionEnum.GOODS_DETAIL_NOT_FOUND);
+        }
+        return detail;
+    }
+
+    public List<Sku> querySkuBySpuId(Long spuId) {
+        //查询sku
+        Sku sku = new Sku();
+        sku.setSpuId(spuId);
+        List<Sku> skuList = skuMapper.select(sku);
+        if (CollectionUtils.isEmpty(skuList)){
+            throw new LyException(ExceptionEnum.GOODS_SKU_NOT_FOUND);
+        }
+
+        //查询库存：方法一：
+//        for (Sku s : skuList) {
+//            Stock stock=stockMapper.selectByPrimaryKey(s.getId());
+//           if (stock==null){
+//               throw  new LyException(ExceptionEnum.STOCK_NOT_ENOUGH);
+//           }
+//           s.setStock(stock.getStock());
+//        }
+
+        //批量查询:方法二
+        List<Long> ids=skuList.stream().map(Sku::getId).collect(Collectors.toList());
+        List<Stock> stockList=stockMapper.selectByIdList(ids);
+        if(CollectionUtils.isEmpty(stockList)){
+            throw  new LyException(ExceptionEnum.STOCK_NOT_ENOUGH);
+        }
+
+        //我们把
+
+        return skuList;
+    }
 }

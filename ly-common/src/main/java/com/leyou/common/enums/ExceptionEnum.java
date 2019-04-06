@@ -21,6 +21,8 @@ public enum ExceptionEnum {
     SPEC_PARAM_NOT_FOUND(404,"商品规格组参数不存在"),
     GOODS_SAVE_ERROR(500, "新增商品错误"),
     GOODS_NOT_FOUND(400, "商品未查询到"),
+    GOODS_DETAIL_NOT_FOUND(400, "商品详情不存在"),
+    GOODS_SKU_NOT_FOUND(400, "商品的SKU不存在"),
     GOODS_NOT_SALEABLE(400, "商品未上架"),
     GOODS_UPDATE_ERROR(500, "商品更新失败"),
     DELETE_GOODS_ERROR(500, "删除商品错误"),
