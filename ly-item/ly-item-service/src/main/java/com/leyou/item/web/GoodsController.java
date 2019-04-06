@@ -71,6 +71,21 @@ public class GoodsController {
 
 
     /**
+     * 新增：
+     * 修改商品
+     * @param spu
+     * @return
+     */
+    @PutMapping("goods")
+    public ResponseEntity<Void> updateGoods(@RequestBody Spu spu) {
+        goodsService.updateGoods(spu);
+        //return new ResponseEntity<>(HttpStatus.CREATED);//旧版本
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
+
+    /**
      * 功能描述: 根据spu的id查询详情detail
      * 〈〉
      *

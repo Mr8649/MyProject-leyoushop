@@ -17,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -125,73 +122,156 @@ public class GoodsService {
      * @since: 1.0.0
      * @Date: 2019/4/2 15:52
      */
-@Transactional
-    public void saveGoods(Spu spu) {
+//@Transactional
+//    public void saveGoods(Spu spu) {
+//    //新增spu
+//    //添加商品要添加四个表 spu, spuDetail, sku, stock四张表
+//    spu.setSaleable(true);
+//    //spu.setValid(true);//原版本
+//    spu.setValid(false);
+//    spu.setId(null);
+//    spu.setCreateTime(new Date());
+//    spu.setLastUpdateTime(spu.getCreateTime());
+//
+//    //插入数据
+//    int count = spuMapper.insert(spu);
+//    if (count != 1) {
+//        throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+//    }
+//
+//    //插入detail数据
+//    SpuDetail detail = spu.getSpuDetail();
+//    detail.setSpuId(spu.getId());
+//    detailMapper.insert(detail);
+//
+//
+//    //定义一个库存集合
+//    //List<Stock> stockList=new ArrayList<>();
+//
+//
+//    //新增SKU
+//    List<Sku> skus = spu.getSkus();
+//    for (Sku sku : skus) {
+//        sku.setCreateTime(new Date());
+//        sku.setLastUpdateTime(sku.getLastUpdateTime());
+//        sku.setSpuId(spu.getId());
+//
+//
+//        count = skuMapper.insert(sku);
+//        if (count != 1) {
+//            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+//        }
+//
+//
+//        /**采用了新增以后就不需要再进行一条一条的插入了,应该采用批量的插入
+//         *  count = stockMapper.insert(stock);
+//         *             if (count != 1) {
+//         *                 throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+//         *             }
+//         */
+//
+//        //插入sku和库存:新增detail
+//        Stock stock = new Stock();
+//        stock.setSkuId(sku.getId());
+//        stock.setStock(sku.getStock());
+//        count = stockMapper.insert(stock);
+//        if (count != 1) {
+//            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+//        }
+//
+//        //stockList.add(stock);
+//        //新增sku和库存====后面才添加的
+//        saveSkuAndStock(spu);
+//    }
+
+    @Transactional
+  public void saveGoods(Spu spu) {
         //新增spu
-        //添加商品要添加四个表 spu, spuDetail, sku, stock四张表
-        spu.setSaleable(true);
-        //spu.setValid(true);//原版本
-        spu.setValid(false);
         spu.setId(null);
         spu.setCreateTime(new Date());
         spu.setLastUpdateTime(spu.getCreateTime());
+        spu.setSaleable(true);
+        spu.setValid(false);
 
-        //插入数据
-        int count = spuMapper.insert(spu);
-        if (count != 1) {
+        int count=spuMapper.insert(spu);
+        if(count!=1){
             throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
         }
 
-        //插入detail数据
-        SpuDetail detail = spu.getSpuDetail();
+        //新增detail
+        SpuDetail detail=spu.getSpuDetail();
         detail.setSpuId(spu.getId());
         detailMapper.insert(detail);
+        saveSkuAndStock(spu);
+    }
 
 
-        //定义一个库存集合
-    //List<Stock> stockList=new ArrayList<>();
-
-
-        //新增SKU
-        List<Sku>skus=spu.getSkus();
+    private void saveSkuAndStock(Spu spu){
+        int count;
+        List<Stock>stockList=new ArrayList<>();
+        //新增sku
+        List<Sku> skus=spu.getSkus();
         for(Sku sku:skus){
             sku.setCreateTime(new Date());
-            sku.setLastUpdateTime(sku.getLastUpdateTime());
+            sku.setLastUpdateTime(sku.getCreateTime());
             sku.setSpuId(spu.getId());
 
-
             count=skuMapper.insert(sku);
-                    if (count != 1) {
-            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
-        }
+            if(count!=1){
+                throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+            }
 
-
-            /**采用了新增以后就不需要再进行一条一条的插入了,应该采用批量的插入
-             *  count = stockMapper.insert(stock);
-             *             if (count != 1) {
-             *                 throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
-             *             }
-             */
-
-            //插入sku和库存
+            //新增库存
             Stock stock=new Stock();
             stock.setSkuId(sku.getId());
             stock.setStock(sku.getStock());
-            count = stockMapper.insert(stock);
-                         if (count != 1) {
-                            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
-                         }
 
-            //stockList.add(stock);
+            stockList.add(stock);
         }
 
-      //批量新增库存
-      //stockMapper.insertList(stockList);
-        //发送消息
+        //批量新增库存
+        count=stockMapper.insertList(stockList);
 
+        if (count!=stockList.size()){
+            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+
+        }
 
     }
 
+//}
+//        private void saveSkuAndStock(Spu spu){
+//            int count;
+//            List<Stock>stockList=new ArrayList<>();
+//            //新增sku
+//            List<Sku> skus=spu.getSkus();
+//            for(Sku sku:skus){
+//                sku.setCreateTime(new Date());
+//                sku.setLastUpdateTime(sku.getCreateTime());
+//                sku.setSpuId(spu.getId());
+//
+//                count=skuMapper.insert(sku);
+//                if(count!=1){
+//                    throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+//                }
+//
+//                //新增库存
+//                Stock stock=new Stock();
+//                stock.setSkuId(sku.getId());
+//                stock.setStock(sku.getStock());
+//
+//                stockList.add(stock);
+//            }
+//
+//            //批量新增库存
+//            count=stockMapper.insertList(stockList);
+//
+//            if (count!=stockList.size()){
+//                throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+//
+//            }
+//
+//    }
 
     /**
      * 查询详情
@@ -237,5 +317,51 @@ public class GoodsService {
         skuList.forEach(s->s.setStock(stockMap.get(sku.getId())));
 
         return skuList;
+    }
+
+
+    @Transactional
+    public void updateGoods(Spu spu){
+        if (spu.getId()==null){
+            throw  new LyException(ExceptionEnum.GOODS_ID_CANNOT_BE_NULL);
+        }
+
+
+
+        Sku sku=new Sku();
+        sku.setSpuId(spu.getId());
+        //查询
+        List<Sku>skuList=skuMapper.select(sku);
+        if(CollectionUtils.isEmpty(skuList)){
+            //删除sku和stock
+            skuMapper.delete(sku);
+            //删除stock
+             List<Long> ids = skuList.stream().map(Sku::getId).collect(Collectors.toList());
+             stockMapper.deleteByIdList(ids);
+
+        }
+
+        //修改spu
+        spu.setValid(null);
+        spu.setSaleable(null);
+        spu.setLastUpdateTime(new Date());
+        spu.setCreateTime(null);
+
+        int count=spuMapper.updateByPrimaryKeySelective(spu);
+        if(count!=1){
+            throw  new LyException(ExceptionEnum.GOODS_UPDATE_ERROR);
+        }
+
+        //修改detail
+         count = detailMapper.updateByPrimaryKeySelective(spu.getSpuDetail());
+        if(count!=1){
+            throw  new LyException(ExceptionEnum.GOODS_UPDATE_ERROR);
+        }
+
+        //新增sku和stock
+        saveSkuAndStock(spu);
+
+
+
     }
 }
