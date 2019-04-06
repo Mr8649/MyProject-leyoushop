@@ -20,6 +20,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -230,7 +231,10 @@ public class GoodsService {
             throw  new LyException(ExceptionEnum.STOCK_NOT_ENOUGH);
         }
 
-        //我们把
+        //我们把stoct变成个map，其key是：sku的id,值是库存值
+        Map<Long,Integer> stockMap=stockList.stream()
+                .collect(Collectors.toMap(Stock::getSkuId,Stock::getStock));
+        skuList.forEach(s->s.setStock(stockMap.get(sku.getId())));
 
         return skuList;
     }
